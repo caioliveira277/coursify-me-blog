@@ -1,9 +1,11 @@
+/* eslint-disable react/style-prop-object */
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { useCallback, useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { ThemeProvider } from 'styled-components';
 import * as SplashScreen from 'expo-splash-screen';
 import Routes from './src/routes/routes';
+import { theme } from './src/theme/default';
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -28,8 +30,15 @@ export default function App() {
 
   return appIsReady ? (
     <NavigationContainer onReady={onLayoutRootView}>
-      <Routes />
-      <StatusBar />
+      <StatusBar
+        style="light"
+        translucent={false}
+        backgroundColor={theme.colors.white}
+        animated
+      />
+      <ThemeProvider theme={theme}>
+        <Routes />
+      </ThemeProvider>
     </NavigationContainer>
   ) : null;
 }
