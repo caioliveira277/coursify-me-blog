@@ -1,16 +1,9 @@
+import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { View } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+import Routes from './src/routes/routes';
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -34,9 +27,9 @@ export default function App() {
   }, [appIsReady]);
 
   return appIsReady ? (
-    <View style={styles.container} onLayout={onLayoutRootView}>
-      <Text>Open up App.tsx to start working on your app!</Text>
+    <NavigationContainer onReady={onLayoutRootView}>
+      <Routes />
       <StatusBar />
-    </View>
+    </NavigationContainer>
   ) : null;
 }
