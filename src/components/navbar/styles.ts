@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
 import { theme } from '../../theme/default';
 
-export const Container = styled.View`
+export const Container = styled.SafeAreaView`
   height: 54px;
   width: 100%;
   background-color: ${props => props.theme.colors.white};
