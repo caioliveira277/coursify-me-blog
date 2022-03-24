@@ -27,6 +27,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "BASE_API_URL": "https://blog.coursify.me/wp-json/wp/v2/"
     }
   }
 }
