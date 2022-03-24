@@ -1,39 +1,31 @@
+import { useEffect, useState } from 'react';
 import { HorizontalList } from '../../components';
 import { Container } from './styles';
-
-const DATA = [
-  {
-    id: 1,
-    title: 'any_title',
-    paragraph: 'any_text',
-  },
-  {
-    id: 2,
-    title: 'any_title',
-    paragraph: 'any_text',
-  },
-  {
-    id: 3,
-    title: 'any_title',
-    paragraph: 'any_text',
-  },
-  {
-    id: 4,
-    title: 'any_title',
-    paragraph: 'any_text',
-  },
-  {
-    id: 5,
-    title: 'any_title',
-    paragraph: 'any_text',
-  },
-];
+import {
+  CategoriesAdapter,
+  IGetCategories,
+} from '../../adapters/CategoriesAdapter';
 
 export default function Home() {
+  const [categories, setCategories] = useState<IGetCategories[]>(
+    [] as IGetCategories[],
+  );
+
+  useEffect(() => {
+    const categoriesAdapter = new CategoriesAdapter();
+    categoriesAdapter.getCategories().then(({ data }) => {
+      setCategories(data);
+    });
+  }, []);
   return (
     <Container>
-      <HorizontalList title="Cursos online" items={DATA} />
-      <HorizontalList title="Marketing Digital" items={DATA} />
+      {categories.map(category => (
+        <HorizontalList
+          key={category.id}
+          title={category.name}
+          items={[{ id: 1, paragraph: '23', title: 'fds' }]}
+        />
+      ))}
     </Container>
   );
 }
