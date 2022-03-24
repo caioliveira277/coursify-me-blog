@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 import * as SplashScreen from 'expo-splash-screen';
 import Routes from './src/routes/routes';
+import { Navbar } from './src/components';
 import { theme } from './src/theme/default';
 
 export default function App() {
@@ -37,6 +38,7 @@ export default function App() {
         animated
       />
       <ThemeProvider theme={theme}>
+        <Navbar />
         <Routes />
       </ThemeProvider>
     </NavigationContainer>
