@@ -1,9 +1,10 @@
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import { Navbar } from '../components';
 
 export default function Home() {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={{ color: 'red' }}>Home Page</Text>
+    <View>
+      <Navbar />
     </View>
   );
 }
