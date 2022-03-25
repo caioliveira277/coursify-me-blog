@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import CardSkeleton from './card-skeleton';
 import {
   boxShadow,
   Card,
@@ -17,7 +18,7 @@ import { IHorizontalList, IRenderItem } from './types';
 
 export default function HorizontalList({
   title,
-  items,
+  items = [],
   navigation,
 }: IHorizontalList) {
   const renderItem = ({ item, index }: IRenderItem) => {
@@ -52,7 +53,11 @@ export default function HorizontalList({
         <Title>{title}</Title>
         <LinkViewMore>Ver Mais ►</LinkViewMore>
       </Header>
-      <ListContainer<any> data={items} renderItem={renderItem} horizontal />
+      {items.length ? (
+        <ListContainer<any> data={items} renderItem={renderItem} horizontal />
+      ) : (
+        <CardSkeleton />
+      )}
     </Container>
   );
 }

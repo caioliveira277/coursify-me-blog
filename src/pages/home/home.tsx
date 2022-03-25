@@ -1,5 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
-import { Footer, HorizontalList, Order } from '../../components';
+import {
+  Footer,
+  HorizontalList,
+  HorizontalListSkeleton,
+  Order,
+} from '../../components';
 import { Container, ScrollContainer } from './styles';
 import {
   PostsAdapter,
@@ -57,21 +62,25 @@ export default function Home({ navigation }: IHome) {
   }, []);
 
   useEffect(() => {
-    CategoriesAdapter.sortList(categories, orderState);
+    setCategories(CategoriesAdapter.sortList(categories, orderState));
   }, [categories, orderState]);
 
   return (
     <ScrollContainer>
       <Container>
         <Order />
-        {categories.map(category => (
-          <HorizontalList
-            key={category.id}
-            title={category.name}
-            items={posts[category.id]}
-            navigation={navigation}
-          />
-        ))}
+        {categories.length ? (
+          categories.map(category => (
+            <HorizontalList
+              key={category.id}
+              title={category.name}
+              items={posts[category.id]}
+              navigation={navigation}
+            />
+          ))
+        ) : (
+          <HorizontalListSkeleton />
+        )}
       </Container>
       <Footer />
     </ScrollContainer>

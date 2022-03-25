@@ -2,7 +2,6 @@ import { AxiosResponse } from 'axios';
 import Constants from 'expo-constants';
 import { IItem } from '../components/horizontal-list/types';
 import { OrderType } from '../contexts/order';
-// import { OrderType } from '../contexts/order';
 import { HttpClient } from './HttpClient';
 
 export interface IGetCategories {

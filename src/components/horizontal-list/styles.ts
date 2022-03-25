@@ -71,6 +71,37 @@ export const boxShadow = StyleSheet.create({
   },
 });
 
+export const cardSkeleton = {
+  containerStyle: StyleSheet.create({
+    card: {
+      overflow: 'hidden',
+      shadowColor: '#000',
+      height: 325,
+      width: 235,
+      backgroundColor: '#fff',
+      borderRadius: 12,
+      shadowOffset: {
+        width: 0,
+        height: 1,
+      },
+      shadowOpacity: 0.18,
+      shadowRadius: 1.0,
+
+      elevation: 1,
+    },
+    header: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 28,
+      justifyContent: 'space-between',
+    },
+  }),
+};
+
+export const ContainerSkeleton = styled.View`
+  margin-bottom: 42px;
+`;
+
 export const ListContainer = styled.FlatList.attrs(() => ({
   contentContainerStyle: {
     paddingTop: 1,
