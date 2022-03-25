@@ -5,6 +5,9 @@ export type IItem = {
   title: string;
   paragraph: string;
   thumbnail: string;
+  content: {
+    rendered: string;
+  };
 };
 
 export interface IRenderItem {

@@ -13,6 +13,9 @@ export interface IGetPosts {
   excerpt: {
     rendered: string;
   };
+  content: {
+    rendered: string;
+  };
   status: string;
   featured_media: number;
 }
@@ -40,6 +43,9 @@ export class PostsAdapter extends HttpClient {
       id: post.id,
       title: post.title.rendered,
       paragraph: post.excerpt.rendered,
+      content: {
+        rendered: post.content.rendered,
+      },
       thumbnail:
         medias.find(media => media.id === post.featured_media)?.media_details
           .sizes.medium.source_url || '',

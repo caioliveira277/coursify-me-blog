@@ -1,17 +1,26 @@
-import { WebView } from 'react-native-webview';
-import { SafeContainer, Title, webView } from './styles';
+import { useWindowDimensions } from 'react-native';
+import RenderHtml from 'react-native-render-html';
+import { Footer } from '../../components';
+import { ScrollContainer, Title, webView, Container } from './styles';
 import { IArticle } from './types';
 
 export default function Article({ route }: IArticle) {
   const { params } = route;
+  const { width: contentWidth } = useWindowDimensions();
   return (
-    <SafeContainer>
-      <Title>{params.title}</Title>
-      <WebView
-        style={webView.container}
-        originWhitelist={['*']}
-        source={{ html: '<h1><center>Hello world</center></h1>' }}
-      />
-    </SafeContainer>
+    <ScrollContainer>
+      <Container>
+        <Title>{params.title}</Title>
+        <RenderHtml
+          contentWidth={contentWidth}
+          baseStyle={webView.baseStyle}
+          tagsStyles={webView.tagsStyles}
+          source={{
+            html: params.content.rendered,
+          }}
+        />
+      </Container>
+      <Footer />
+    </ScrollContainer>
   );
 }
