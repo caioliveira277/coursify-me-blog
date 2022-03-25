@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { TouchableOpacity } from 'react-native';
 import {
   boxShadow,
   Card,
@@ -16,10 +15,20 @@ import {
 } from './styles';
 import { IHorizontalList, IRenderItem } from './types';
 
-export default function HorizontalList({ title, items }: IHorizontalList) {
+export default function HorizontalList({
+  title,
+  items,
+  navigation,
+}: IHorizontalList) {
   const renderItem = ({ item, index }: IRenderItem) => {
     return (
-      <Card style={boxShadow.shadow} lastItem={items.length === index + 1}>
+      <Card
+        style={boxShadow.shadow}
+        lastItem={items.length === index + 1}
+        onPress={() => {
+          navigation.navigate('Article', item);
+        }}
+      >
         <CardImage
           source={{
             uri: item.thumbnail,
@@ -31,9 +40,7 @@ export default function HorizontalList({ title, items }: IHorizontalList) {
           <CardParagraph numberOfLines={4}>
             {item.paragraph.replace(/(<([^>]+)>)/gi, '')}
           </CardParagraph>
-          <TouchableOpacity>
-            <CardLink>Leia mais</CardLink>
-          </TouchableOpacity>
+          <CardLink>Leia mais</CardLink>
         </CardContent>
       </Card>
     );

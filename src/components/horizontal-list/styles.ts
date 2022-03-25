@@ -25,7 +25,7 @@ export const LinkViewMore = styled.Text`
   text-transform: uppercase;
 `;
 
-export const Card = styled.View<{ lastItem: boolean }>`
+export const Card = styled.TouchableOpacity<{ lastItem: boolean }>`
   width: 235px;
   height: 325px;
   border-radius: 12px;
