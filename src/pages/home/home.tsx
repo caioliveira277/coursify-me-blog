@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Footer, HorizontalList } from '../../components';
-import { Container, SafeContainer } from './styles';
+import { Container, ScrollContainer } from './styles';
 import {
   CategoriesAdapter,
   IGetCategories,
@@ -48,7 +48,7 @@ export default function Home({ navigation }: IHome) {
   }, [categories]);
 
   return (
-    <SafeContainer>
+    <ScrollContainer>
       <Container>
         {categories.map(category => (
           <HorizontalList
@@ -60,6 +60,6 @@ export default function Home({ navigation }: IHome) {
         ))}
       </Container>
       <Footer />
-    </SafeContainer>
+    </ScrollContainer>
   );
 }
