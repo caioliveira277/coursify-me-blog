@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { HorizontalList } from '../../components';
-import { Container } from './styles';
+import { Footer, HorizontalList } from '../../components';
+import { Container, SafeContainer } from './styles';
 import {
   CategoriesAdapter,
   IGetCategories,
@@ -47,14 +47,17 @@ export default function Home() {
   }, [categories]);
 
   return (
-    <Container>
-      {categories.map(category => (
-        <HorizontalList
-          key={category.id}
-          title={category.name}
-          items={items[category.id]}
-        />
-      ))}
-    </Container>
+    <SafeContainer>
+      <Container>
+        {categories.map(category => (
+          <HorizontalList
+            key={category.id}
+            title={category.name}
+            items={items[category.id]}
+          />
+        ))}
+      </Container>
+      <Footer />
+    </SafeContainer>
   );
 }
