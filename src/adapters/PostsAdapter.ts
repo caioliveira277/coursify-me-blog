@@ -1,8 +1,7 @@
 import { AxiosResponse } from 'axios';
 import Constants from 'expo-constants';
-import { IItem, IThumbnail } from '../components/horizontal-list/types';
+import { IItem } from '../components/horizontal-list/types';
 import { HttpClient } from './HttpClient';
-import { IGetMedia } from './MediasAdapter';
 
 export interface IGetPosts {
   id: number;
