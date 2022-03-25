@@ -2,6 +2,7 @@ export type IItem = {
   id: number;
   title: string;
   paragraph: string;
+  thumbnail: string;
 };
 
 export interface IRenderItem {
