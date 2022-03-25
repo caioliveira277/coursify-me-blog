@@ -17,6 +17,8 @@ export const Title = styled.Text`
   font-size: 22px;
   font-weight: bold;
   text-transform: uppercase;
+  flex-wrap: wrap;
+  flex: 1;
 `;
 export const LinkViewMore = styled.Text`
   color: ${props => props.theme.colors.gray_500};
