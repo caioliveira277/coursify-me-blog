@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
 import Constants from 'expo-constants';
+import { OrderType } from '../contexts/order';
 import { HttpClient } from './HttpClient';
 
 export interface IGetCategories {
@@ -18,5 +19,29 @@ export class CategoriesAdapter extends HttpClient {
     return this.instance.get(
       `/categories?per_page=${this.categoriesPerPage}&exclude=732,5,1282`,
     );
+  }
+
+  public static sortList(
+    categories: IGetCategories[],
+    type: OrderType,
+  ): IGetCategories[] {
+    categories.sort((prev, next) => {
+      let sorted: number;
+
+      switch (type) {
+        case 'asc':
+          sorted = next.name.localeCompare(prev.name);
+          break;
+        case 'desc':
+          sorted = prev.name.localeCompare(next.name);
+          break;
+        default:
+          sorted = 0;
+          break;
+      }
+      return sorted;
+    });
+
+    return categories;
   }
 }

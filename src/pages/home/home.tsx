@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Footer, HorizontalList, Order } from '../../components';
 import { Container, ScrollContainer } from './styles';
 import {
@@ -9,8 +9,10 @@ import { PostsAdapter } from '../../adapters/PostsAdapter';
 import { IItem } from '../../components/horizontal-list/types';
 import { MediasAdapter } from '../../adapters/MediasAdapter';
 import { IHome } from './types';
+import { OrderContext } from '../../contexts/order';
 
 export default function Home({ navigation }: IHome) {
+  const { state } = useContext(OrderContext);
   const [categories, setCategories] = useState<IGetCategories[]>(
     [] as IGetCategories[],
   );
@@ -46,6 +48,12 @@ export default function Home({ navigation }: IHome) {
       });
     });
   }, [categories]);
+
+  useEffect(() => {
+    setCategories(prevState => {
+      return CategoriesAdapter.sortList(prevState, state);
+    });
+  }, [state]);
 
   return (
     <ScrollContainer>

@@ -7,6 +7,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import Routes from './src/routes/routes';
 import { Navbar } from './src/components';
 import { theme } from './src/theme/default';
+import { OrderContextProvider } from './src/contexts/order';
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -38,8 +39,10 @@ export default function App() {
         animated
       />
       <ThemeProvider theme={theme}>
-        <Navbar />
-        <Routes />
+        <OrderContextProvider>
+          <Navbar />
+          <Routes />
+        </OrderContextProvider>
       </ThemeProvider>
     </NavigationContainer>
   ) : null;
