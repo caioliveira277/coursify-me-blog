@@ -8,8 +8,9 @@ import {
 import { PostsAdapter } from '../../adapters/PostsAdapter';
 import { IItem } from '../../components/horizontal-list/types';
 import { MediasAdapter } from '../../adapters/MediasAdapter';
+import { IHome } from './types';
 
-export default function Home() {
+export default function Home({ navigation }: IHome) {
   const [categories, setCategories] = useState<IGetCategories[]>(
     [] as IGetCategories[],
   );
@@ -54,6 +55,7 @@ export default function Home() {
             key={category.id}
             title={category.name}
             items={items[category.id]}
+            navigation={navigation}
           />
         ))}
       </Container>

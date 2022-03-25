@@ -1,3 +1,5 @@
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
 export type IItem = {
   id: number;
   title: string;
@@ -13,4 +15,5 @@ export interface IRenderItem {
 export interface IHorizontalList {
   title: string;
   items: IItem[];
+  navigation: NativeStackNavigationProp<RootStackParamList, 'Home'>;
 }
