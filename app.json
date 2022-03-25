@@ -13,9 +13,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -29,7 +27,8 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
-      "BASE_API_URL": "https://blog.coursify.me/wp-json/wp/v2/"
+      "BASE_API_URL": "https://blog.coursify.me/wp-json/wp/v2/",
+      "SITE_URL": "https://coursify.me/"
     }
   }
 }
