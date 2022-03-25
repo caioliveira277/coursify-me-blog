@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Footer, HorizontalList } from '../../components';
+import { Footer, HorizontalList, Order } from '../../components';
 import { Container, ScrollContainer } from './styles';
 import {
   CategoriesAdapter,
@@ -50,6 +50,7 @@ export default function Home({ navigation }: IHome) {
   return (
     <ScrollContainer>
       <Container>
+        <Order />
         {categories.map(category => (
           <HorizontalList
             key={category.id}
