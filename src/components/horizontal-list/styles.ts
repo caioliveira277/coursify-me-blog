@@ -45,10 +45,10 @@ export const CardTitle = styled.Text`
   font-weight: bold;
   text-transform: capitalize;
 `;
-export const CardParagrath = styled.Text`
+export const CardParagraph = styled.Text`
   color: ${props => props.theme.colors.gray_400};
   font-size: 16px;
-  margin: 16px 0;
+  margin: 16px 0px;
 `;
 export const CardLink = styled.Text`
   font-size: 16px;

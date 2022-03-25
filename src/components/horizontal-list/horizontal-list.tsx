@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Text, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import {
   boxShadow,
   Card,
   CardImage,
   CardLink,
-  CardParagrath,
+  CardParagraph,
   CardTitle,
   ListContainer,
   Container,
@@ -22,12 +22,15 @@ export default function HorizontalList({ title, items }: IHorizontalList) {
       <Card style={boxShadow.shadow} lastItem={items.length === index + 1}>
         <CardImage
           source={{
-            uri: 'https://blog.coursify.me/wp-content/uploads/2019/07/sell-on-social-networks-cover-coursfiyme.jpg',
+            uri: item.thumbnail,
           }}
+          resizeMode="cover"
         />
         <CardContent>
-          <CardTitle>{item.title}</CardTitle>
-          <CardParagrath>{item.paragraph}</CardParagrath>
+          <CardTitle numberOfLines={2}>{item.title}</CardTitle>
+          <CardParagraph numberOfLines={4}>
+            {item.paragraph.replace(/(<([^>]+)>)/gi, '')}
+          </CardParagraph>
           <TouchableOpacity>
             <CardLink>Leia mais</CardLink>
           </TouchableOpacity>
@@ -42,9 +45,7 @@ export default function HorizontalList({ title, items }: IHorizontalList) {
         <Title>{title}</Title>
         <LinkViewMore>Ver Mais ►</LinkViewMore>
       </Header>
-      <ListContainer<any> data={items} renderItem={renderItem} horizontal>
-        <Text>Teste</Text>
-      </ListContainer>
+      <ListContainer<any> data={items} renderItem={renderItem} horizontal />
     </Container>
   );
 }
