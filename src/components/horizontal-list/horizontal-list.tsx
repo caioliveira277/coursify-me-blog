@@ -4,7 +4,7 @@ import {
   Card,
   CardImage,
   CardLink,
-  CardParagraph,
+  CardDescription,
   CardTitle,
   ListContainer,
   Container,
@@ -31,15 +31,15 @@ export default function HorizontalList({
       >
         <CardImage
           source={{
-            uri: item.thumbnail,
+            uri: item.thumbnail.sourceUri,
           }}
           resizeMode="cover"
         />
         <CardContent>
           <CardTitle numberOfLines={2}>{item.title}</CardTitle>
-          <CardParagraph numberOfLines={4}>
-            {item.paragraph.replace(/(<([^>]+)>)/gi, '')}
-          </CardParagraph>
+          <CardDescription numberOfLines={4}>
+            {item.description.replace(/(<([^>]+)>)/gi, '')}
+          </CardDescription>
           <CardLink>Leia mais</CardLink>
         </CardContent>
       </Card>

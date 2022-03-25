@@ -16,7 +16,7 @@ export default function Article({ route }: IArticle) {
           baseStyle={webView.baseStyle}
           tagsStyles={webView.tagsStyles}
           source={{
-            html: params.content.rendered,
+            html: params.content,
           }}
         />
       </Container>

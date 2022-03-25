@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import Constants from 'expo-constants';
-import { IItem } from '../components/horizontal-list/types';
+import { IItem, IThumbnail } from '../components/horizontal-list/types';
 import { HttpClient } from './HttpClient';
 import { IGetMedia } from './MediasAdapter';
 
@@ -16,40 +16,55 @@ export interface IGetPosts {
   content: {
     rendered: string;
   };
-  status: string;
+  page_views: number;
+  categories: number[];
   featured_media: number;
 }
 
 export class PostsAdapter extends HttpClient {
-  public postsPerPage = 10;
+  protected readonly postsPerPage = 20;
+
+  public viewsPerCategories: { [key: number]: number } = {};
+
+  public featuredMediaIds: number[] = [];
 
   public constructor() {
     super(Constants.manifest?.extra?.BASE_API_URL);
   }
 
   public async getPosts(
-    categoryId: number,
+    categoriesIds: number[],
   ): Promise<AxiosResponse<IGetPosts[]>> {
     return this.instance.get(
-      `/posts?categories=${categoryId}&per_page=${this.postsPerPage}`,
+      `/posts?categories=${categoriesIds.join(',')}&per_page=${
+        this.postsPerPage
+      }`,
     );
   }
 
-  public static formatPostsForItems(
-    posts: IGetPosts[],
-    medias: IGetMedia[],
-  ): IItem[] {
-    const items: IItem[] = posts.map(post => ({
-      id: post.id,
-      title: post.title.rendered,
-      paragraph: post.excerpt.rendered,
-      content: {
-        rendered: post.content.rendered,
-      },
-      thumbnail:
-        medias.find(media => media.id === post.featured_media)?.media_details
-          .sizes.medium.source_url || '',
-    }));
+  public formatPostsForState(posts: IGetPosts[]): IItem[] {
+    const items: IItem[] = [];
+
+    posts.forEach(post => {
+      post.categories.forEach(categoryId => {
+        this.viewsPerCategories[categoryId] =
+          (this.viewsPerCategories[categoryId] || 0) + post.page_views;
+      });
+
+      this.featuredMediaIds.push(post.featured_media);
+
+      items.push({
+        id: post.id,
+        title: post.title.rendered,
+        description: post.excerpt.rendered,
+        content: post.content.rendered,
+        thumbnail: {
+          id: post.featured_media,
+          sourceUri: '',
+        },
+        categories: post.categories,
+      });
+    });
 
     return items;
   }

@@ -6,15 +6,15 @@ import { Container, Title, picker, PickerContainer } from './styles';
 
 export default function Order() {
   const themeContext = useContext(ThemeContext);
-  const { state, setState } = useContext(OrderContext);
+  const { orderState, setOrderState } = useContext(OrderContext);
   return (
     <Container>
       <Title>Ordenar por:</Title>
       <PickerContainer style={picker.border}>
         <Picker
           style={picker.container}
-          selectedValue={state}
-          onValueChange={itemValue => setState(itemValue)}
+          selectedValue={orderState}
+          onValueChange={itemValue => setOrderState(itemValue)}
         >
           <Picker.Item
             color={themeContext.colors.gray_600}

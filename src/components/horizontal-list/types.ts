@@ -1,13 +1,17 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
+export type IThumbnail = {
+  id: number;
+  sourceUri: string;
+};
+
 export type IItem = {
   id: number;
   title: string;
-  paragraph: string;
-  thumbnail: string;
-  content: {
-    rendered: string;
-  };
+  description: string;
+  thumbnail: IThumbnail;
+  content: string;
+  categories: number[];
 };
 
 export interface IRenderItem {

@@ -11,13 +11,13 @@ import {
 export type OrderType = 'asc' | 'desc' | 'more_view' | 'less_view';
 
 type PropsOrderContext = {
-  state: OrderType;
-  setState: Dispatch<SetStateAction<OrderType>>;
+  orderState: OrderType;
+  setOrderState: Dispatch<SetStateAction<OrderType>>;
 };
 
-const DEFAULT_VALUE: { state: OrderType; setState: () => '' } = {
-  state: 'asc',
-  setState: () => '',
+const DEFAULT_VALUE: { orderState: OrderType; setOrderState: () => '' } = {
+  orderState: 'asc',
+  setOrderState: () => '',
 };
 
 export const OrderContext = createContext<PropsOrderContext>(DEFAULT_VALUE);
@@ -25,8 +25,11 @@ export const OrderContext = createContext<PropsOrderContext>(DEFAULT_VALUE);
 export function OrderContextProvider({
   children,
 }: PropsWithChildren<ReactNode>) {
-  const [state, setState] = useState(DEFAULT_VALUE.state);
-  const valueProvider = useMemo(() => ({ state, setState }), [state]);
+  const [orderState, setOrderState] = useState(DEFAULT_VALUE.orderState);
+  const valueProvider = useMemo(
+    () => ({ orderState, setOrderState }),
+    [orderState],
+  );
 
   return (
     <OrderContext.Provider value={valueProvider}>

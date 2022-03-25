@@ -47,7 +47,7 @@ export const CardTitle = styled.Text`
   font-weight: bold;
   text-transform: capitalize;
 `;
-export const CardParagraph = styled.Text`
+export const CardDescription = styled.Text`
   color: ${props => props.theme.colors.gray_400};
   font-size: 16px;
   margin: 16px 0px;

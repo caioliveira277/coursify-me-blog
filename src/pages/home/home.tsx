@@ -2,58 +2,63 @@ import { useContext, useEffect, useState } from 'react';
 import { Footer, HorizontalList, Order } from '../../components';
 import { Container, ScrollContainer } from './styles';
 import {
+  PostsAdapter,
+  MediasAdapter,
   CategoriesAdapter,
   IGetCategories,
-} from '../../adapters/CategoriesAdapter';
-import { PostsAdapter } from '../../adapters/PostsAdapter';
+} from '../../adapters';
 import { IItem } from '../../components/horizontal-list/types';
-import { MediasAdapter } from '../../adapters/MediasAdapter';
 import { IHome } from './types';
 import { OrderContext } from '../../contexts/order';
 
+const categoriesAdapter = new CategoriesAdapter();
+const postsAdapter = new PostsAdapter();
+const mediasAdapter = new MediasAdapter();
+
 export default function Home({ navigation }: IHome) {
-  const { state } = useContext(OrderContext);
+  const { orderState } = useContext(OrderContext);
   const [categories, setCategories] = useState<IGetCategories[]>(
     [] as IGetCategories[],
   );
-  const [items, setItems] = useState<{ [key: number]: IItem[] }>(
+  const [posts, setPosts] = useState<{ [key: number]: IItem[] }>(
     {} as { [key: number]: IItem[] },
   );
 
   useEffect(() => {
-    const categoriesAdapter = new CategoriesAdapter();
-    categoriesAdapter.getCategories().then(({ data }) => {
-      setCategories(data);
+    categoriesAdapter.getCategories().then(({ data: dataCategories }) => {
+      setCategories(categoriesAdapter.formatCategoriesForState(dataCategories));
+      postsAdapter
+        .getPosts(categoriesAdapter.categoriesIds)
+        .then(({ data: dataPosts }) => {
+          const formattedPosts = postsAdapter.formatPostsForState(dataPosts);
+          mediasAdapter
+            .getMedias(postsAdapter.featuredMediaIds)
+            .then(({ data: dataMedias }) => {
+              const thumbnails = mediasAdapter.formatMediasForState(dataMedias);
+
+              const assignedMedias = mediasAdapter.assignMedias(
+                thumbnails,
+                formattedPosts,
+              );
+              const assignedPosts = categoriesAdapter.assignPosts(
+                dataCategories,
+                assignedMedias,
+              );
+
+              const assignedViews = categoriesAdapter.assignViews(
+                dataCategories,
+                postsAdapter.viewsPerCategories,
+              );
+              setPosts(assignedPosts);
+              setCategories(assignedViews);
+            });
+        });
     });
   }, []);
 
   useEffect(() => {
-    const postsAdapter = new PostsAdapter();
-    const mediasAdapter = new MediasAdapter();
-
-    categories.forEach(category => {
-      postsAdapter.getPosts(category.id).then(({ data: dataPost }) => {
-        mediasAdapter
-          .getMedias(dataPost.map(post => post.featured_media))
-          .then(({ data: dataMedia }) => {
-            const formattedItems = PostsAdapter.formatPostsForItems(
-              dataPost,
-              dataMedia,
-            );
-            setItems(prevState => ({
-              ...prevState,
-              [category.id]: formattedItems,
-            }));
-          });
-      });
-    });
-  }, [categories]);
-
-  useEffect(() => {
-    setCategories(prevState => {
-      return CategoriesAdapter.sortList(prevState, state);
-    });
-  }, [state]);
+    CategoriesAdapter.sortList(categories, orderState);
+  }, [categories, orderState]);
 
   return (
     <ScrollContainer>
@@ -63,7 +68,7 @@ export default function Home({ navigation }: IHome) {
           <HorizontalList
             key={category.id}
             title={category.name}
-            items={items[category.id]}
+            items={posts[category.id]}
             navigation={navigation}
           />
         ))}
