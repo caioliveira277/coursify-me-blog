@@ -5,10 +5,16 @@ import {
   CategoriesAdapter,
   IGetCategories,
 } from '../../adapters/CategoriesAdapter';
+import { PostsAdapter } from '../../adapters/PostsAdapter';
+import { IItem } from '../../components/horizontal-list/types';
+import { MediasAdapter } from '../../adapters/MediasAdapter';
 
 export default function Home() {
   const [categories, setCategories] = useState<IGetCategories[]>(
     [] as IGetCategories[],
+  );
+  const [items, setItems] = useState<{ [key: number]: IItem[] }>(
+    {} as { [key: number]: IItem[] },
   );
 
   useEffect(() => {
@@ -17,13 +23,36 @@ export default function Home() {
       setCategories(data);
     });
   }, []);
+
+  useEffect(() => {
+    const postsAdapter = new PostsAdapter();
+    const mediasAdapter = new MediasAdapter();
+
+    categories.forEach(category => {
+      postsAdapter.getPosts(category.id).then(({ data: dataPost }) => {
+        mediasAdapter
+          .getMedias(dataPost.map(post => post.featured_media))
+          .then(({ data: dataMedia }) => {
+            const formattedItems = PostsAdapter.formatPostsForItems(
+              dataPost,
+              dataMedia,
+            );
+            setItems(prevState => ({
+              ...prevState,
+              [category.id]: formattedItems,
+            }));
+          });
+      });
+    });
+  }, [categories]);
+
   return (
     <Container>
       {categories.map(category => (
         <HorizontalList
           key={category.id}
           title={category.name}
-          items={[{ id: 1, paragraph: '23', title: 'fds' }]}
+          items={items[category.id]}
         />
       ))}
     </Container>
