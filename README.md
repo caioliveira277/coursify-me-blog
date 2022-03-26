@@ -1,7 +1,3 @@
-# coursify-me-blog
-Projeto de teste 
-
-
 # Coursify-me-blog 
 ## Projeto de teste para empresa empresa: ***Envixo - Softwares Inteligentes Sob Demanda***.
 
