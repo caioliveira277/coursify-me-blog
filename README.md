@@ -1,5 +1,5 @@
 # Coursify-me-blog 
-## Projeto de teste para empresa empresa: ***Envixo - Softwares Inteligentes Sob Demanda***.
+## Projeto de teste para empresa: ***Envixo - Softwares Inteligentes Sob Demanda***.
 
 <br>
 <p float="left">
